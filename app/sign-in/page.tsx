@@ -1,48 +1,45 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useRouter } from "next/navigation";
 
-const SignInPage = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-  const router = useRouter()
+import styles from "./page.module.css";
+
+export default function SignInPage() {
+  const { signIn } = useAuth();
+  const router = useRouter();
+
+  const [email, setEmail] = useState("user@example.com");
+  const [password, setPassword] = useState("password");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (email === 'user@example.com' && password === 'password') {
-      localStorage.setItem('isAuthenticated', 'true')
-      router.push('/leads')
+    if (email === "user@example.com" && password === "password") {
+      localStorage.setItem("isAuthenticated", "true");
+      signIn();
     } else {
-      setErrorMessage('Invalid email or password')
+      setErrorMessage("Invalid email or password");
     }
-  }
+  };
 
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit}>
-        <h1>Sign In</h1>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        {errorMessage && <p>{errorMessage}</p>}
-        <button type="submit">Sign In</button>
+    <div className={styles.container}>
+      <h1>Sign In</h1>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.formGroup}>
+          <label>Email:</label>
+          <input type="email" value={email} readOnly />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Password:</label>
+          <input type="password" value={password} readOnly />
+        </div>
+        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+        <button type="submit" className={styles.submitBtn}>Sign In</button>
       </form>
     </div>
-  )
+  );
 }
-
-export default SignInPage

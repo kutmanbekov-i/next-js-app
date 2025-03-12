@@ -28,7 +28,27 @@ export async function GET() {
  */
 export async function POST(req: Request) {
   try {
-    const { firstName, lastName, email, linkedIn, visas, resumeUrl, additional } = await req.json();
+    const formData = await req.formData();
+
+    const firstName = formData.get("firstName") as string;
+    const lastName = formData.get("lastName") as string;
+    const email = formData.get("email") as string;
+    const linkedIn = formData.get("linkedIn") as string;
+    const visas = formData.get("visas") as string;
+    const resume = formData.get("resume") as File | null;
+    const additional = formData.get("additional") as string;
+
+    if (!firstName || !lastName || !email || !linkedIn || !visas) {
+      throw new Error("Missing required fields");
+    }
+
+    let resumeUrl = null;
+    if (resume) {
+      const buffer = await resume.arrayBuffer();
+      const bytes = new Uint8Array(buffer);
+      console.log("Received resume file:", resume.name, "Size:", bytes.length);
+      resumeUrl = `/uploads/${resume.name}`;
+    }
 
     const lead = await prisma.lead.create({
       data: {
@@ -36,7 +56,7 @@ export async function POST(req: Request) {
         lastName,
         email,
         linkedIn,
-        visas: visas.join(","),
+        visas,
         resumeUrl,
         additional,
       },
@@ -44,6 +64,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(lead, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to create lead" }, { status: 500 });
+    console.error("Error creating lead:", error);
+    return NextResponse.json({ error: error || "Unknown error" }, { status: 500 });
   }
 }

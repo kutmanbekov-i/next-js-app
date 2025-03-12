@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+}
+
+.mainContent {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.searchContainer {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.searchInput {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex-grow: 1;
+  max-width: 400px;
+}
+
+.statusSelect {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  color: #000;
+}
+
+.table th {
+  background-color: #fff;
+  text-align: left;
+  color: #aaa;
+}
+
+.table th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.table th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.table tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.table tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+.statusButton {
+  padding: 5px 16px;
+  border: none;
+  background-color: transparent;
+  color: #000;
+  font-size: 1em;
+  cursor: pointer;
+
+  border-radius: 4px;
+}
+
+.statusButton:hover {
+  background-color: #fafafa;
+}

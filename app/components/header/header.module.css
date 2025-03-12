@@ -1,0 +1,31 @@
+.header {
+  background: #d5d99a;
+  padding: 10px 20px;
+  color: white;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0.5rem 2rem;
+}
+
+.navList a,
+.signInBtn,
+.signOutBtn {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.signInBtn:hover,
+.signOutBtn:hover {
+  text-decoration: underline;
+}
